@@ -101,11 +101,7 @@ URL or ID: @FranceInter
 
 [go-version-src]: https://img.shields.io/static/v1?style=flat&label=Go&message=v1.21&color=00ADD8&logo=go&logoColor=ffffff&labelColor=18181b
 [go-version-href]: https://go.dev/
-[tests-src]: https://img.shields.io/github/actions/workflow/status/ewilan-riviere/youtube/run-tests.yml?branch=main&label=tests&style=flat&colorA=18181B
-[tests-href]: https://github.com/ewilan-riviere/youtube/actions
-[license-src]: https://img.shields.io/github/license/ewilan-riviere/youtube.svg?style=flat&colorA=18181B&colorB=00ADD8
-[license-href]: https://github.com/ewilan-riviere/youtube/blob/main/LICENSE
-
-```
-
-```
+[tests-src]: https://img.shields.io/github/actions/workflow/status/ewilan-riviere/dlp/run-tests.yml?branch=main&label=tests&style=flat&colorA=18181B
+[tests-href]: https://github.com/ewilan-riviere/dlp/actions
+[license-src]: https://img.shields.io/github/license/ewilan-riviere/dlp.svg?style=flat&colorA=18181B&colorB=00ADD8
+[license-href]: https://github.com/ewilan-riviere/dlp/blob/main/LICENSE
