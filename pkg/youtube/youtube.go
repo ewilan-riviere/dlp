@@ -63,8 +63,6 @@ func execCommand(command Command) {
 
 func buildCommand(params Params) Command {
 	saveTo := downloadDirectory()
-	fmt.Print(strings.Contains(params.FullUrl, "playlist"))
-	fmt.Print("id", params.ID)
 	if strings.Contains(params.FullUrl, "playlist") {
 		saveTo = filepath.Join(saveTo, params.ID)
 	}
@@ -107,7 +105,7 @@ func buildCommand(params Params) Command {
 	}
 
 	command := "yt-dlp"
-	fmt.Println("")
+	fmt.Println("\n")
 	fmt.Println("Command:")
 	fmt.Print(command + " " + cmd)
 	fmt.Println("\n")
