@@ -14,8 +14,8 @@ go install github.com/ewilan-riviere/dlp@latest
 
 Dependencies:
 
-- [`yt-dlp`](https://github.com/yt-dlp/yt-dlp)
-- [`ffmpeg`](https://github.com/FFmpeg/FFmpeg)
+- [`yt-dlp`](https://github.com/yt-dlp/yt-dlp): min 2023.11.16
+- [`ffmpeg`](https://github.com/FFmpeg/FFmpeg): min v6.0
 
 ## Usage
 
