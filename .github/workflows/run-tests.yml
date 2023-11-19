@@ -1,0 +1,26 @@
+name: Go
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: ["1.21.1"]
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Go ${{ matrix.go-version }}
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: Install yt-dlp
+        run: |
+          apt update
+          apt install -y ffmpeg
+          wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/local/bin/yt-dlp
+          chmod a+rx /usr/local/bin/yt-dlp
+      - name: Run tests
+        run: |
+          go test
