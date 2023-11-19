@@ -57,35 +57,73 @@ dlp get -a <URL_OR_ID> # `dlp get -a` works too
 
 Here URL used are from YouTube but it works with other websites.
 
-Video:
+Video full URL
 
 ```bash
 dlp get https://www.youtube.com/watch?v=dQw4w9WgXcQ
-dlp get dQw4w9WgXcQ
-dlp get
+```
 
+ID (only for YouTube)
+
+```bash
+dlp get dQw4w9WgXcQ
+```
+
+Short command
+
+```bash
+dlp get
+```
+
+Will ask:
+
+```bash
 Please enter a video URL or a Youtube ID
 URL or ID: dQw4w9WgXcQ
 ```
 
-Playlist:
+Playlist full URL
 
 ```bash
 dlp get https://www.youtube.com/playlist?list=PLomb1f2d9BZrQc82QHJEDYgnPXHfMDjlC
-dlp get PLomb1f2d9BZrQc82QHJEDYgnPXHfMDjlC
-dlp get
+```
 
+ID (only for YouTube)
+
+```bash
+dlp get PLomb1f2d9BZrQc82QHJEDYgnPXHfMDjlC
+```
+
+```bash
+dlp get
+```
+
+Will ask:
+
+```bash
 Please enter a video URL or a Youtube ID
 URL or ID: PLomb1f2d9BZrQc82QHJEDYgnPXHfMDjlC
 ```
 
-Channel:
+Channel full URL
 
 ```bash
 dlp get https://www.youtube.com/@FranceInter
-dlp get @FranceInter
-dlp get
+```
 
+ID (only for YouTube)
+
+```bash
+dlp get @FranceInter
+```
+
+```bash
+dlp get
+```
+
+Will ask:
+
+```bash
 Please enter a video URL or a Youtube ID
 URL or ID: @FranceInter
 ```
