@@ -17,10 +17,10 @@ jobs:
           go-version: ${{ matrix.go-version }}
       - name: Install yt-dlp
         run: |
-          apt update
-          apt install -y ffmpeg
-          wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/local/bin/yt-dlp
-          chmod a+rx /usr/local/bin/yt-dlp
+          sudo apt update
+          sudo apt install -y ffmpeg
+          sudo wget https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/local/bin/yt-dlp
+          sudo chmod a+rx /usr/local/bin/yt-dlp
       - name: Run tests
         run: |
           go test
