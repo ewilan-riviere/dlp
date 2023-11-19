@@ -23,6 +23,7 @@ Dependencies:
 
 `get` command download a video, a playlist or a channel. Argument can be a URL or an YouTube ID, it will be detected automatically. With URL, it possible to use another website than YouTube, like DailyMotion or PeerTube for example, ID only accept YouTube ID (video, playlist or channel).
 
+- Video quality is set to `best` with maximum to `1080p`
 - Videos will be downloaded in `Downloads` folder
 - You can execute command without argument, it will ask you to enter an URL or an ID.
 
