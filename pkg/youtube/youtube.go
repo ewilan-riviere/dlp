@@ -25,6 +25,9 @@ type Command struct {
 }
 
 func Main(params Params) {
+	if params.Type == "" {
+		params.Type = "auto"
+	}
 	fmt.Println("Download video from " + params.FullUrl)
 	if params.Audio {
 		fmt.Println("Download audio only")
