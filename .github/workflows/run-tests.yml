@@ -23,7 +23,7 @@ jobs:
           sudo chmod a+rx /usr/local/bin/yt-dlp
       - name: Run build
         run: |
-          go build -o dlp && ./dlp get
+          go build -o dlp && ./dlp get https://www.youtube.com/watch?v=dQw4w9WgXcQ
       - name: Run tests
         run: |
           go test
