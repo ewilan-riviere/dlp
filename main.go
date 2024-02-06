@@ -9,6 +9,7 @@
 // Options:
 //
 // - `-a` or `--audio`: download only audio
+// - `-d` or `--downloads-dir`: save downloaded video in Downloads folder. Default is current folder
 //
 // Examples:
 //
@@ -35,13 +36,55 @@ import (
 )
 
 func main() {
-	var cmdGet = &cobra.Command{
-		Use:   "get [id]",
-		Short: "Download video from URL or Youtube from ID",
-		Long:  `Download video from URL or Youtube from ID, it can be a video, a playlist or a channel`,
+	cmdGet := createCommand(
+		"get [id]",
+		"Download video from URL or Youtube from ID",
+		"Download video from URL or Youtube from ID, it can be a video, a playlist or a channel",
+		"auto",
+	)
+	addFlags(cmdGet)
+
+	cmdVideo := createCommand(
+		"video [id]",
+		"Download video from URL or Youtube from ID",
+		"Download video from URL or Youtube from ID",
+		"video",
+	)
+	addFlags(cmdVideo)
+
+	cmdPlaylist := createCommand(
+		"playlist [id]",
+		"Download playlist from URL or Youtube from ID",
+		"Download playlist from URL or Youtube from ID",
+		"playlist",
+	)
+	addFlags(cmdPlaylist)
+
+	cmdChannel := createCommand(
+		"channel [id]",
+		"Download channel from URL or Youtube from ID",
+		"Download channel from URL or Youtube from ID",
+		"channel",
+	)
+	addFlags(cmdChannel)
+
+	var rootCmd = &cobra.Command{Use: "dlp"}
+	rootCmd.AddCommand(cmdGet)
+	rootCmd.AddCommand(cmdVideo)
+	rootCmd.AddCommand(cmdPlaylist)
+	rootCmd.AddCommand(cmdChannel)
+	rootCmd.Execute()
+}
+
+func createCommand(use string, short string, long string, origin string) *cobra.Command {
+	return &cobra.Command{
+		Use:   use,
+		Short: short,
+		Long:  long,
 		Args:  cobra.MinimumNArgs(0),
 		Run: func(cmd *cobra.Command, args []string) {
 			audio, _ := cmd.Flags().GetBool("audio")
+			downloadsDir, _ := cmd.Flags().GetBool("downloads-dir")
 			id := ""
 
 			if len(args) > 0 {
@@ -65,35 +108,53 @@ func main() {
 			}
 
 			if !isUrl {
-				url = youtubeUrl(id)
+				url = youtubeUrl(id, origin)
 			}
 
 			youtube.Main(youtube.Params{
-				Audio:   audio,
-				FullUrl: url,
+				Audio:              audio,
+				FullUrl:            url,
+				SaveToDownloadsDir: downloadsDir,
+				Type:               origin,
 			})
 		},
 	}
-
-	cmdGet.Flags().BoolP("audio", "a", false, "To convert downloaded video to audio (works with video, playlist, channel)")
-	var rootCmd = &cobra.Command{Use: "dlp"}
-	rootCmd.AddCommand(cmdGet)
-	rootCmd.Execute()
 }
 
-func youtubeUrl(id string) string {
+func addFlags(cmdGet *cobra.Command) {
+	cmdGet.Flags().BoolP("audio", "a", false, "To convert downloaded video to audio (works with video, playlist, channel)")
+	cmdGet.Flags().BoolP("downloads-dir", "d", false, "Save downloaded video in Downloads folder. Default is current folder")
+}
+
+func youtubeUrl(id string, origin string) string {
 	const YoutubeBaseUrl = "https://www.youtube.com"
 	const YoutubeTypeVideo = "watch?v="
 	const YoutubeTypePlaylist = "playlist?list="
 	const YoutubeTypeChannel = "/"
 
-	if strings.Contains(id, "@") {
-		return YoutubeBaseUrl + "/" + YoutubeTypeChannel + id
+	if origin == "auto" {
+		if strings.Contains(id, "@") {
+			return YoutubeBaseUrl + "/" + YoutubeTypeChannel + id
+		}
+
+		length := len(id)
+		if length > 15 {
+			return YoutubeBaseUrl + "/" + YoutubeTypePlaylist + id
+		}
+
+		return YoutubeBaseUrl + "/" + YoutubeTypeVideo + id
 	}
 
-	length := len(id)
-	if length > 15 {
+	if origin == "video" {
+		return YoutubeBaseUrl + "/" + YoutubeTypeVideo + id
+	}
+
+	if origin == "playlist" {
 		return YoutubeBaseUrl + "/" + YoutubeTypePlaylist + id
+	}
+
+	if origin == "channel" {
+		return YoutubeBaseUrl + "/" + YoutubeTypeChannel + id
 	}
 
 	return YoutubeBaseUrl + "/" + YoutubeTypeVideo + id

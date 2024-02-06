@@ -3,6 +3,7 @@ package youtube
 import (
 	"fmt"
 	"log"
+	"os"
 	"os/exec"
 	"os/user"
 	"path/filepath"
@@ -11,10 +12,11 @@ import (
 )
 
 type Params struct {
-	ID      string
-	Type    string // video, playlist, channel
-	Audio   bool
-	FullUrl string
+	ID                 string
+	Type               string // auto, video, playlist, channel
+	Audio              bool
+	FullUrl            string
+	SaveToDownloadsDir bool
 }
 
 type Command struct {
@@ -58,15 +60,42 @@ func execCommand(command Command) {
 			break
 		}
 	}
-
 }
 
 func buildCommand(params Params) Command {
-	saveTo := downloadDirectory()
-	if strings.Contains(params.FullUrl, "playlist") {
+	isPlaylist := false
+	isChannel := false
+	if params.Type == "auto" {
+		isPlaylist = strings.Contains(params.FullUrl, "playlist")
+		isChannel = strings.Contains(params.FullUrl, "channel")
+		if !isChannel {
+			isChannel = strings.Contains(params.FullUrl, "@")
+		}
+	}
+
+	if params.Type == "playlist" {
+		isPlaylist = true
+
+	}
+
+	if params.Type == "channel" {
+		isChannel = true
+	}
+
+	saveTo := currentDirectory()
+
+	if params.SaveToDownloadsDir {
+		saveTo = downloadDirectory()
+	}
+
+	if isPlaylist || isChannel {
 		saveTo = filepath.Join(saveTo, params.ID)
 	}
+
 	path := filepath.Join(saveTo, "%(title)s.%(ext)s")
+	if params.SaveToDownloadsDir {
+		path = filepath.Join(saveTo, "%(playlist_index)s-%(title)s.%(ext)s")
+	}
 
 	url := params.FullUrl
 	args := []string{}
@@ -114,6 +143,15 @@ func buildCommand(params Params) Command {
 		Name: "yt-dlp",
 		Args: args,
 	}
+}
+
+func currentDirectory() string {
+	dir, err := os.Getwd()
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+
+	return dir
 }
 
 func downloadDirectory() string {

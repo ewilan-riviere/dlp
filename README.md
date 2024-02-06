@@ -4,7 +4,14 @@
 [![tests][tests-src]][tests-href]
 [![license][license-src]][license-href]
 
-CLI to use [`yt-dlp`](https://github.com/yt-dlp/dlp) easily. `yt-dlp` have many options and it can be hard to do simple things. This CLI is here to help you.
+CLI to use [`yt-dlp`](https://github.com/yt-dlp/yt-dlp) easily. `yt-dlp` have many options and it can be hard to do simple things. This CLI is here to help you.
+
+> [!NOTE]
+> This package use informations from tutorials
+>
+> - <https://www.linuxfordevices.com/tutorials/linux/yt-dlp-download-youtube-videos>
+> - <https://www.linuxtricks.fr/wiki/yt-dlp-telecharger-des-videos-sur-internet-youtube-dl>
+> - <https://write.corbpie.com/downloading-youtube-videos-and-playlists-with-yt-dlp/>
 
 ## Install
 
@@ -19,9 +26,33 @@ Dependencies:
 
 ## Usage
 
-### Get
+- `get`: download a video, a playlist or a channel
+- `video`: download a video
+- `playlist`: download a playlist
+- `channel`: download a channel
 
-`get` command download a video, a playlist or a channel. Argument can be a URL or an YouTube ID, it will be detected automatically. With URL, it possible to use another website than YouTube, like DailyMotion or PeerTube for example, ID only accept YouTube ID (video, playlist or channel).
+Parameter can be set directly:
+
+```bash
+dlp video https://www.youtube.com/watch?v=dQw4w9WgXcQ
+dlp video dQw4w9WgXcQ # only for YouTube
+```
+
+Or after the command:
+
+```bash
+dlp video
+
+Please enter a video URL or a Youtube ID
+URL or ID: dQw4w9WgXcQ
+```
+
+`get` command will download a video, a playlist or a channel, it will guess from the URL or the ID. If you want to use a direct command, you can use `video`, `playlist` or `channel` command.
+
+Argument can be a URL or an YouTube ID, it will be detected automatically. With URL, it possible to use another website than YouTube, like DailyMotion or PeerTube for example, ID only accept YouTube ID (video, playlist or channel).
+
+> [!NOTE]
+> Playlist and channel videos will be downloaded in a folder with the name of the playlist or the channel. And index will be added to the name of the video.
 
 - Video quality is set to `best` with maximum to `1080p`
 - Videos will be downloaded in `Downloads` folder
@@ -30,6 +61,7 @@ Dependencies:
 Options:
 
 - `-a` or `--audio`: download only audio
+- `-d` or `--downloads-dir`: save videos to Downloads folder, default is current folder
 
 ```bash
 dlp get <URL_OR_ID>
