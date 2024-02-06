@@ -63,30 +63,7 @@ Options:
 - `-a` or `--audio`: download only audio
 - `-d` or `--downloads-dir`: save videos to Downloads folder, default is current folder
 
-```bash
-dlp get <URL_OR_ID>
-```
-
-or
-
-```bash
-dlp get
-```
-
-Will ask:
-
-```bash
-Please enter a video URL or a Youtube ID
-URL or ID:
-```
-
-You can use `--audio` option to download only audio:
-
-```bash
-dlp get -a <URL_OR_ID> # `dlp get -a` works too
-```
-
-#### Example
+### Example
 
 Here URL used are from YouTube but it works with other websites.
 
