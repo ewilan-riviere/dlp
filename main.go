@@ -10,6 +10,7 @@
 //
 // - `-a` or `--audio`: download only audio
 // - `-d` or `--downloads-dir`: save downloaded video in Downloads folder. Default is current folder
+// - `-c` or `--chapters`: download with split chapters
 //
 // Examples:
 //
@@ -85,6 +86,7 @@ func createCommand(use string, short string, long string, origin string) *cobra.
 		Run: func(cmd *cobra.Command, args []string) {
 			audio, _ := cmd.Flags().GetBool("audio")
 			downloadsDir, _ := cmd.Flags().GetBool("downloads-dir")
+			chapters, _ := cmd.Flags().GetBool("chapters")
 			id := ""
 
 			if len(args) > 0 {
@@ -116,6 +118,7 @@ func createCommand(use string, short string, long string, origin string) *cobra.
 				FullUrl:            url,
 				SaveToDownloadsDir: downloadsDir,
 				Type:               origin,
+				Chapters:           chapters,
 			})
 		},
 	}
@@ -124,6 +127,7 @@ func createCommand(use string, short string, long string, origin string) *cobra.
 func addFlags(cmdGet *cobra.Command) {
 	cmdGet.Flags().BoolP("audio", "a", false, "To convert downloaded video to audio (works with video, playlist, channel)")
 	cmdGet.Flags().BoolP("downloads-dir", "d", false, "Save downloaded video in Downloads folder. Default is current folder")
+	cmdGet.Flags().BoolP("chapters", "c", false, "Download with split chapters")
 }
 
 func youtubeUrl(id string, origin string) string {

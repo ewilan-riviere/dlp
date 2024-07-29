@@ -48,12 +48,26 @@ func TestWebhook(t *testing.T) {
 		SaveToDownloadsDir: true,
 	})
 
+	// with chapters
+	youtube.Main(youtube.Params{
+		ID:                 "TLV2IqSIr44",
+		Audio:              true,
+		FullUrl:            "https://www.youtube.com/watch?v=TLV2IqSIr44",
+		SaveToDownloadsDir: true,
+		Chapters:           true,
+	})
+
 	isExists = fileExists(downloadDirectory() + "/PLomb1f2d9BZrQc82QHJEDYgnPXHfMDjlC/2-Rick Astley - Together Forever (Official Video) [Remastered in 4K].mp4")
 	if !isExists {
 		t.Errorf("File not found")
 	}
 
 	isExists = fileExists(downloadDirectory() + "/PLomb1f2d9BZrQc82QHJEDYgnPXHfMDjlC/1-Rick Astley - Never Gonna Give You Up (Official Music Video).mp4")
+	if !isExists {
+		t.Errorf("File not found")
+	}
+
+	isExists = fileExists(downloadDirectory() + "/TLV2IqSIr44/Hazbin Hotel Full Soundtrack - Episodes 1-8 (UPDATED)-NA.mp3")
 	if !isExists {
 		t.Errorf("File not found")
 	}

@@ -24,6 +24,14 @@ Dependencies:
 - [`yt-dlp`](https://github.com/yt-dlp/yt-dlp): min 2023.11.16
 - [`ffmpeg`](https://github.com/FFmpeg/FFmpeg): min v6.0
 
+### Update
+
+Update to the latest version
+
+```bash
+go install github.com/ewilan-riviere/dlp@latest
+```
+
 ## Usage
 
 - `get`: download a video, a playlist or a channel

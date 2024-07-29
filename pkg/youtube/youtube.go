@@ -17,6 +17,7 @@ type Params struct {
 	Audio              bool
 	FullUrl            string
 	SaveToDownloadsDir bool
+	Chapters           bool
 }
 
 type Command struct {
@@ -31,6 +32,9 @@ func Main(params Params) {
 	fmt.Println("Download video from " + params.FullUrl)
 	if params.Audio {
 		fmt.Println("Download audio only")
+	}
+	if params.Chapters {
+		fmt.Println("Download with chapters")
 	}
 
 	parts := strings.Split(params.FullUrl, "/")
@@ -99,6 +103,9 @@ func buildCommand(params Params) Command {
 	if params.SaveToDownloadsDir {
 		path = filepath.Join(saveTo, "%(playlist_index)s-%(title)s.%(ext)s")
 	}
+	if params.Chapters {
+		path = filepath.Join(saveTo, params.ID, "%(title)s.%(ext)s")
+	}
 
 	url := params.FullUrl
 	args := []string{}
@@ -112,10 +119,17 @@ func buildCommand(params Params) Command {
 			"-x",
 			"--audio-format",
 			"mp3",
-			"-o",
-			path,
 		}
-		cmd = "-f ba " + url + " -x --audio-format mp3 -o " + "'" + path + "'"
+		if params.Chapters {
+			args = append(args, "--split-chapters")
+		}
+		args = append(args, "-o", path)
+
+		cmd = "-f ba " + url + " -x --audio-format mp3 "
+		if params.Chapters {
+			cmd += "--split-chapters "
+		}
+		cmd += "-o " + "'" + path + "'"
 	} else {
 		qbest := "bv*+ba/b"
 		q1080 := "bv*[height=1080]+ba"
@@ -130,10 +144,17 @@ func buildCommand(params Params) Command {
 			"res,ext:mp4:m4a",
 			"--recode",
 			"mp4",
-			"-o",
-			path,
 		}
-		cmd = "-f '" + quality + "' " + url + " -S res,ext:mp4:m4a --recode mp4 -o " + "'" + path + "'"
+		if params.Chapters {
+			args = append(args, "--split-chapters")
+		}
+		args = append(args, "-o", path)
+
+		cmd = "-f '" + quality + "' " + url + " -S res,ext:mp4:m4a --recode mp4 "
+		if params.Chapters {
+			cmd += "--split-chapters "
+		}
+		cmd += "-o " + "'" + path + "'"
 	}
 
 	command := "yt-dlp"
