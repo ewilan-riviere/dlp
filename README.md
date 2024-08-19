@@ -34,10 +34,11 @@ go install github.com/ewilan-riviere/dlp@latest
 
 ## Usage
 
-- `get`: download a video, a playlist or a channel
-- `video`: download a video
-- `playlist`: download a playlist
 - `channel`: download a channel
+- `chapters`: download a video with chapters (don't work with `downloads` flag)
+- `get`: download a video, a playlist or a channel
+- `playlist`: download a playlist
+- `video`: download a video
 
 Parameter can be set directly:
 
@@ -55,7 +56,7 @@ Please enter a video URL or a Youtube ID
 URL or ID: dQw4w9WgXcQ
 ```
 
-`get` command will download a video, a playlist or a channel, it will guess from the URL or the ID. If you want to use a direct command, you can use `video`, `playlist` or `channel` command.
+`get` command will download a video, a playlist or a channel, it will guess from the URL or the ID. If you want to use a direct command, you can use `video`, `chapters`, `playlist` or `channel` command.
 
 Argument can be a URL or an YouTube ID, it will be detected automatically. With URL, it possible to use another website than YouTube, like DailyMotion or PeerTube for example, ID only accept YouTube ID (video, playlist or channel).
 
@@ -69,7 +70,7 @@ Argument can be a URL or an YouTube ID, it will be detected automatically. With 
 Options:
 
 - `-a` or `--audio`: download only audio
-- `-d` or `--downloads-dir`: save videos to Downloads folder, default is current folder
+- `-d` or `--downloads`: save videos to Downloads folder, default is current folder (don't work with `chapters` command)
 
 ### Example
 

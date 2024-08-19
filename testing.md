@@ -1,7 +1,7 @@
 # Testing
 
 ```bash
-go build -o dlp && ./dlp
+go build -ldflags="-X main.version=v0.0.24" -o dlp && ./dlp
 ```
 
 ```bash
@@ -11,6 +11,8 @@ go test
 ```bash
 rm -rf testing
 mkdir testing
+rm *.mp3
+rm *.mp4
 cd testing
 ../dlp video https://www.youtube.com/watch?v=dQw4w9WgXcQ
 ../dlp video -c https://www.youtube.com/watch?v=TLV2IqSIr44
@@ -31,12 +33,8 @@ cd ..
 ```
 
 ```bash
-git tag v0.0.23
-git push origin v0.0.23
+git tag v0.0.24
+git push origin v0.0.24
 ```
 
-Click on "Request" on <https://pkg.go.dev/github.com/ewilan-riviere/dlp@v0.0.23>
-
-```bash
-go build -o dlp && ./dlp get
-```
+Click on "Request" on <https://pkg.go.dev/github.com/ewilan-riviere/dlp@v0.0.24>

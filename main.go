@@ -3,14 +3,18 @@
 // `get` command download a video, a playlist or a channel. Argument can be a URL or an YouTube ID, it will be detected automatically.
 // With URL, it possible to use another website than YouTube, like DailyMotion or PeerTube for example, ID only accept YouTube ID (video, playlist or channel).
 //
-// - Videos will be downloaded in `Downloads` folder
-// - You can execute command without argument, it will ask you to enter an URL or an ID.
+// Command `video` is a shortcut to download a video from URL or ID.
+// Command `playlist` is a shortcut to download a playlist from URL or ID.
+// Command `channel` is a shortcut to download a channel from URL or ID.
+// Command `chapters` is to download a video with chapters splitted from URL or ID (flag `-d` will be ignored).
+//
+// Videos will be downloaded in current directory by default or in `Downloads` directory with flag `-d` or `--downloads`.
+// You can execute command without argument, it will ask you to enter an URL or an ID.
 //
 // Options:
 //
 // - `-a` or `--audio`: download only audio
-// - `-d` or `--downloads-dir`: save downloaded video in Downloads folder. Default is current folder
-// - `-c` or `--chapters`: download with split chapters
+// - `-d` or `--downloads`: save downloaded video in Downloads folder. Default is current folder
 //
 // Examples:
 //
@@ -36,7 +40,27 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var (
+	version = "v0.0.24"
+)
+
 func main() {
+	cmdChannel := createCommand(
+		"channel [id]",
+		"Download channel from URL or Youtube from ID",
+		"Download channel from URL or Youtube from ID",
+		"channel",
+	)
+	addFlags(cmdChannel)
+
+	cmdChapters := createCommand(
+		"chapters [id]",
+		"Download video with chapters splitted from URL or Youtube from ID",
+		"Download video with chapters splitted from URL or Youtube from ID",
+		"chapters",
+	)
+	addFlags(cmdChapters)
+
 	cmdGet := createCommand(
 		"get [id]",
 		"Download video from URL or Youtube from ID",
@@ -44,14 +68,6 @@ func main() {
 		"auto",
 	)
 	addFlags(cmdGet)
-
-	cmdVideo := createCommand(
-		"video [id]",
-		"Download video from URL or Youtube from ID",
-		"Download video from URL or Youtube from ID",
-		"video",
-	)
-	addFlags(cmdVideo)
 
 	cmdPlaylist := createCommand(
 		"playlist [id]",
@@ -61,19 +77,25 @@ func main() {
 	)
 	addFlags(cmdPlaylist)
 
-	cmdChannel := createCommand(
-		"channel [id]",
-		"Download channel from URL or Youtube from ID",
-		"Download channel from URL or Youtube from ID",
-		"channel",
+	cmdVideo := createCommand(
+		"video [id]",
+		"Download video from URL or Youtube from ID",
+		"Download video from URL or Youtube from ID",
+		"video",
 	)
-	addFlags(cmdChannel)
+	addFlags(cmdVideo)
 
-	var rootCmd = &cobra.Command{Use: "dlp"}
+	var rootCmd = &cobra.Command{
+		Use:     "dlp",
+		Version: version,
+		Short:   "Download video from URL or Youtube from ID",
+		Long:    "Download video from URL or Youtube from ID, it can be a video, a playlist or a channel",
+	}
 	rootCmd.AddCommand(cmdGet)
 	rootCmd.AddCommand(cmdVideo)
 	rootCmd.AddCommand(cmdPlaylist)
 	rootCmd.AddCommand(cmdChannel)
+	rootCmd.AddCommand(cmdChapters)
 	rootCmd.Execute()
 }
 
@@ -85,8 +107,7 @@ func createCommand(use string, short string, long string, origin string) *cobra.
 		Args:  cobra.MinimumNArgs(0),
 		Run: func(cmd *cobra.Command, args []string) {
 			audio, _ := cmd.Flags().GetBool("audio")
-			downloadsDir, _ := cmd.Flags().GetBool("downloads-dir")
-			chapters, _ := cmd.Flags().GetBool("chapters")
+			downloadsDir, _ := cmd.Flags().GetBool("downloads")
 			id := ""
 
 			if len(args) > 0 {
@@ -118,7 +139,7 @@ func createCommand(use string, short string, long string, origin string) *cobra.
 				FullUrl:            url,
 				SaveToDownloadsDir: downloadsDir,
 				Type:               origin,
-				Chapters:           chapters,
+				Chapters:           origin == "chapters",
 			})
 		},
 	}
@@ -126,8 +147,7 @@ func createCommand(use string, short string, long string, origin string) *cobra.
 
 func addFlags(cmdGet *cobra.Command) {
 	cmdGet.Flags().BoolP("audio", "a", false, "To convert downloaded video to audio (works with video, playlist, channel)")
-	cmdGet.Flags().BoolP("downloads-dir", "d", false, "Save downloaded video in Downloads folder. Default is current folder")
-	cmdGet.Flags().BoolP("chapters", "c", false, "Download with split chapters")
+	cmdGet.Flags().BoolP("downloads", "d", false, "Save downloaded video in Downloads folder. Default is current folder")
 }
 
 func youtubeUrl(id string, origin string) string {

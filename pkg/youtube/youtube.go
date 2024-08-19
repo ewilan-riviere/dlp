@@ -70,6 +70,15 @@ func execCommand(command Command) {
 }
 
 func buildCommand(params Params) Command {
+	// print params with label
+	fmt.Println("Params:")
+	fmt.Println("ID: " + params.ID)
+	fmt.Println("Type: " + params.Type)
+	fmt.Println("Audio: " + fmt.Sprint(params.Audio))
+	fmt.Println("FullUrl: " + params.FullUrl)
+	fmt.Println("SaveToDownloadsDir: " + fmt.Sprint(params.SaveToDownloadsDir))
+	fmt.Println("Chapters: " + fmt.Sprint(params.Chapters))
+	fmt.Println("\n")
 	isPlaylist := false
 	isChannel := false
 	if params.Type == "auto" {
