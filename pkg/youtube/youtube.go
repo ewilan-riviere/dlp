@@ -79,8 +79,10 @@ func buildCommand(params Params) Command {
 	fmt.Println("SaveToDownloadsDir: " + fmt.Sprint(params.SaveToDownloadsDir))
 	fmt.Println("Chapters: " + fmt.Sprint(params.Chapters))
 	fmt.Println("\n")
+
 	isPlaylist := false
 	isChannel := false
+
 	if params.Type == "auto" {
 		isPlaylist = strings.Contains(params.FullUrl, "playlist")
 		isChannel = strings.Contains(params.FullUrl, "channel")
@@ -91,7 +93,6 @@ func buildCommand(params Params) Command {
 
 	if params.Type == "playlist" {
 		isPlaylist = true
-
 	}
 
 	if params.Type == "channel" {
@@ -109,7 +110,7 @@ func buildCommand(params Params) Command {
 	}
 
 	path := filepath.Join(saveTo, "%(title)s.%(ext)s")
-	if params.SaveToDownloadsDir {
+	if isPlaylist || isChannel {
 		path = filepath.Join(saveTo, "%(playlist_index)s-%(title)s.%(ext)s")
 	}
 	if params.Chapters {
