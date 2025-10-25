@@ -71,6 +71,7 @@ Options:
 
 - `-a` or `--audio`: download only audio
 - `-d` or `--downloads`: save videos to Downloads folder, default is current folder (don't work with `chapters` command)
+- `-c` or `--cookies`: add cookies option to download via cookies website (value is cookies path)
 
 ### Example
 
