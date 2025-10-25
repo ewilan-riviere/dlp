@@ -15,6 +15,7 @@
 //
 // - `-a` or `--audio`: download only audio
 // - `-d` or `--downloads`: save downloaded video in Downloads folder. Default is current folder
+// - `-c` or `--cookies`: add cookies option to download via cookies website (value is cookies path)
 //
 // Examples:
 //
@@ -41,7 +42,7 @@ import (
 )
 
 var (
-	version = "v0.0.25"
+	version = "v0.0.26"
 )
 
 func main() {
@@ -108,6 +109,7 @@ func createCommand(use string, short string, long string, origin string) *cobra.
 		Run: func(cmd *cobra.Command, args []string) {
 			audio, _ := cmd.Flags().GetBool("audio")
 			downloadsDir, _ := cmd.Flags().GetBool("downloads")
+			cookies, _ := cmd.Flags().GetString("cookies")
 			id := ""
 
 			if len(args) > 0 {
@@ -140,6 +142,7 @@ func createCommand(use string, short string, long string, origin string) *cobra.
 				SaveToDownloadsDir: downloadsDir,
 				Type:               origin,
 				Chapters:           origin == "chapters",
+				Cookies:            cookies,
 			})
 		},
 	}
@@ -148,6 +151,7 @@ func createCommand(use string, short string, long string, origin string) *cobra.
 func addFlags(cmdGet *cobra.Command) {
 	cmdGet.Flags().BoolP("audio", "a", false, "To convert downloaded video to audio (works with video, playlist, channel)")
 	cmdGet.Flags().BoolP("downloads", "d", false, "Save downloaded video in Downloads folder. Default is current folder")
+	cmdGet.Flags().StringP("cookies", "c", "", "Add cookies option to download via cookies website (value is cookies path)")
 }
 
 func youtubeUrl(id string, origin string) string {

@@ -18,6 +18,7 @@ type Params struct {
 	FullUrl            string
 	SaveToDownloadsDir bool
 	Chapters           bool
+	Cookies            string
 }
 
 type Command struct {
@@ -78,6 +79,7 @@ func buildCommand(params Params) Command {
 	fmt.Println("FullUrl: " + params.FullUrl)
 	fmt.Println("SaveToDownloadsDir: " + fmt.Sprint(params.SaveToDownloadsDir))
 	fmt.Println("Chapters: " + fmt.Sprint(params.Chapters))
+	fmt.Println("Cookies: " + fmt.Sprint(params.Cookies))
 	fmt.Println("\n")
 
 	isPlaylist := false
@@ -165,6 +167,10 @@ func buildCommand(params Params) Command {
 			cmd += "--split-chapters "
 		}
 		cmd += "-o " + "'" + path + "'"
+
+		if params.Cookies != "" {
+			cmd += "--cookies " + params.Cookies
+		}
 	}
 
 	command := "yt-dlp"
