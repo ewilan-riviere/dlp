@@ -33,8 +33,8 @@ cd ..
 ```
 
 ```bash
-git tag v0.0.26
-git push origin v0.0.26
+git tag v0.0.28
+git push origin v0.0.28
 ```
 
-Click on "Request" on <https://pkg.go.dev/github.com/ewilan-riviere/dlp@v0.0.26>
+Click on "Request" on <https://pkg.go.dev/github.com/ewilan-riviere/dlp@v0.0.28>

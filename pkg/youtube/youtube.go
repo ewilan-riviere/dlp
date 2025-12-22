@@ -169,7 +169,7 @@ func buildCommand(params Params) Command {
 		cmd += "-o " + "'" + path + "'"
 
 		if params.Cookies != "" {
-			cmd += "--cookies " + params.Cookies
+			cmd += " --cookies " + params.Cookies
 		}
 	}
 
