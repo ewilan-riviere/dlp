@@ -1,7 +1,7 @@
 # Testing
 
 ```bash
-go build -ldflags="-X main.version=v0.0.29" -o dlp && ./dlp
+go build -ldflags="-X main.version=v0.0.30" -o dlp && ./dlp
 ```
 
 ```bash
@@ -33,8 +33,8 @@ cd ..
 ```
 
 ```bash
-git tag v0.0.29
-git push origin v0.0.29
+git tag v0.0.30
+git push origin v0.0.30
 ```
 
-Click on "Request" on <https://pkg.go.dev/github.com/ewilan-riviere/dlp@v0.0.29>
+Click on "Request" on <https://pkg.go.dev/github.com/ewilan-riviere/dlp@v0.0.30>
