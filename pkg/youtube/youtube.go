@@ -108,7 +108,7 @@ func buildCommand(params Params) Command {
 	}
 
 	if isPlaylist || isChannel {
-		saveTo = filepath.Join(saveTo, params.ID)
+		saveTo = filepath.Join(saveTo, "%(playlist_title)s")
 	}
 
 	path := filepath.Join(saveTo, "%(title)s.%(ext)s")
